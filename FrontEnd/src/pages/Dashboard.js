@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Asegúrate de importar esto
 import { jwtDecode } from 'jwt-decode';
 import './Dashboard.css';
 
@@ -8,29 +8,48 @@ function Dashboard() {
   const token = localStorage.getItem('token');
   const [email, setEmail] = useState('');
   const [profilePic, setProfilePic] = useState(null);
-  const [description, setDescription] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar el menú desplegable
-  const [randomFrase, setRandomFrase] = useState(''); // Estado para la frase aleatoria
+  const [currentTime, setCurrentTime] = useState(''); // Estado para la hora
 
-  // Usamos useEffect para cargar los datos del usuario al montar el componente
+// Obtener la hora del microservicio GraphQL
+useEffect(() => {
+  const fetchCurrentTime = async () => {
+    try {
+      const query = `
+        query {
+          currentTime
+        }
+      `;
+
+      const response = await fetch('http://98.85.244.110:8000/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+
+      const result = await response.json();
+      if (result && result.data && result.data.currentTime) {
+        setCurrentTime(result.data.currentTime);
+      }
+    } catch (error) {
+      console.error('Error al obtener la hora desde GraphQL:', error);
+    }
+  };
+
+  fetchCurrentTime();
+}, []);
+
+
+  // Obtener el email del token
   useEffect(() => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        const userEmail = decoded.email;
-        setEmail(userEmail);
-
-        const storedPic = localStorage.getItem(`profilePic-${userEmail}`);
+        setEmail(decoded.email);
+        
+        const storedPic = localStorage.getItem(`profilePic-${decoded.email}`);
         if (storedPic) {
           setProfilePic(storedPic);
         }
-
-        fetch(`http://50.17.170.185:4565/get-description?email=${userEmail}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setDescription(data.description || 'Sin descripción');
-          })
-          .catch((err) => console.error('Error al cargar descripción:', err));
       } catch (err) {
         console.error('Token inválido');
       }
@@ -39,81 +58,76 @@ function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/');
+    navigate('/'); // Redirige al login o página principal
   };
 
   const goToSettings = () => {
-    navigate('/settings');
+    navigate('/settings'); // Redirige a la página de configuraciones
   };
 
-  const handleViewProducts = () => {
-    navigate('/products');  // Redirige a la página de productos
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const fileName = `profile_pics/${Date.now()}-${file.name}`;
+    const s3URL = `https://bucketgalo123.s3.amazonaws.com/${fileName}`;
+
+    try {
+      await fetch(s3URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file
+      });
+      setProfilePic(s3URL);
+      localStorage.setItem(`profilePic-${email}`, s3URL);
+    } catch (error) {
+      console.error('Error al subir imagen:', error);
+      alert('Error al subir la imagen');
+    }
   };
 
-  // Función para obtener la frase aleatoria desde el microservicio
-  const getFrase = () => {
-    fetch('http://50.19.246.209:5000/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `{
-          obtenerFrases
-        }`
-      }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      const frases = data.data.obtenerFrases;
-      const randomIndex = Math.floor(Math.random() * frases.length);
-      setRandomFrase(frases[randomIndex]);
-    })
-    .catch((error) => console.error('Error fetching frase:', error));
+  const handleScheduleAppointment = () => {
+    navigate('/schedule-appointment'); // Redirige a la página para agendar una cita
+  };
+
+  const handleViewAppointments = () => {
+    navigate('/view-appointments'); // Redirige a la página donde el usuario puede ver sus citas
   };
 
   return (
     <div className="dashboard-container">
-      {/* Menú desplegable */}
-      <div className="menu-container">
-        <button onClick={() => setMenuOpen(!menuOpen)} className="menu-button">
-          ☰
-        </button>
-        {menuOpen && (
-          <div className="dropdown-menu">
-            <button onClick={goToSettings} className="dropdown-item">Configuraciones</button>
-            <button onClick={handleLogout} className="dropdown-item">Cerrar sesión</button>
-          </div>
+      <div className="dashboard-header">
+        <button onClick={goToSettings} className="header-button">Configuraciones</button>
+        <button onClick={handleLogout} className="header-button">Cerrar sesión</button>
+      </div>
+
+      <div className="dashboard-profile">
+        <div className="profile-picture-placeholder">
+          {profilePic ? (
+            <img src={profilePic} alt="Perfil" width={100} height={100} style={{ borderRadius: '50%' }} />
+          ) : (
+            "Foto"
+          )}
+        </div>
+        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <p className="dashboard-email">{email}</p>
+      </div>
+
+      {/* Mostrar la hora */}
+      <div className="current-time">
+        {currentTime ? (
+          <p className="current-time-text">Hora actual: {currentTime}</p>
+        ) : (
+          <p className="current-time-text">Cargando hora...</p>
         )}
       </div>
 
-      {/* Título principal */}
-      <h1 className="welcome-title">Bienvenido a Water Market</h1>
-
-      {/* Perfil */}
-      <div className="profile-container">
-        <p className="dashboard-email">{email}</p>
-        <p className="user-description">{description}</p>
-      </div>
-
-      {/* Botón de "Ver productos" */}
-      <div className="view-products-container">
-        <button onClick={handleViewProducts} className="view-products-button">
-          Ver productos
+      <div className="chat-button-container">
+        <button onClick={handleScheduleAppointment} className="form-button">
+          Agendar cita
         </button>
-      </div>
-
-      {/* Frase debajo del botón de productos */}
-      <div className="store-description-container">
-        <p className="store-description-text">
-          {randomFrase}
-        </p>
-      </div>
-
-      {/* Botón para obtener una nueva frase */}
-      <div className="get-frase-container">
-        <button onClick={getFrase} className="get-frase-button">
-          Obtener una nueva frase
+        <button onClick={handleViewAppointments} className="form-button">
+          Ver citas
         </button>
       </div>
     </div>

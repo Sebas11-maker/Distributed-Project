@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css'; // Usamos el mismo estilo para que se vea similar
+import './Login.css'; 
 
 function RootLogin() {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ function RootLogin() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://54.162.152.155/api/root', {
+      const res = await axios.post('http://52.22.251.163/api/root', {
         email,
         password
       });

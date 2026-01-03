@@ -10,9 +10,26 @@ function Login() {
   const [captchaText, setCaptchaText] = useState(''); // Estado para guardar el texto ingresado por el usuario
   const navigate = useNavigate();
 
+  // Función para obtener la imagen del captcha
+  useEffect(() => {
+    const fetchCaptcha = async () => {
+      try {
+        const response = await axios.get('http://54.144.143.116/api/captcha/generate-captcha', { responseType: 'blob' });
+        
+        // Crear una URL del objeto blob
+        const imageUrl = URL.createObjectURL(response.data);
+        setCaptcha(imageUrl);
+      } catch (err) {
+        console.error('Error al cargar el captcha:', err);
+      }
+    };
+
+    fetchCaptcha(); // Llamar a la función al montar el componente
+  }, []);
+
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://54.162.152.155/api/login', {
+      const res = await axios.post('http://54.144.143.116/api/login', {
         email,
         password,
         captcha: captchaText // Incluir el captcha ingresado por el usuario
@@ -26,13 +43,15 @@ function Login() {
     }
   };
 
-  return (
+ return (
     <div className="login-container">
-      <div className="login-box">
-        {/* Logo Water Market */}
-        <h1 className="login-logo">Water Market</h1>
+      {/* Logo fuera del contenedor del formulario */}
+      <div className="login-logo">
+        <img src="logo.gif" alt="Logo Barbería" className="logo-image" />
+      </div>
 
-        <h2 className="login-title">Iniciar sesión </h2>
+      <div className="login-box">
+        <h2 className="login-title">Iniciar sesión</h2>
 
         <input
           type="text"
