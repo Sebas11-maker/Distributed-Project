@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Docker images for frontend
       run: |
-        docker build -t sebitas11/my-react-app .
+        docker build -t sebitas11/my-react-app ./FrontEnd
 
     - name: Push images to Docker Hub
       run: |
