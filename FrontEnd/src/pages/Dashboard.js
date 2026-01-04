@@ -20,7 +20,7 @@ useEffect(() => {
         }
       `;
 
-      const response = await fetch('http://98.85.244.110:8000/graphql', {
+      const response = await fetch('http://3.227.167.247:8000/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query }),
