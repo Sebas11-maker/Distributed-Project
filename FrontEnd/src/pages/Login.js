@@ -6,17 +6,17 @@ import './Login.css';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captcha, setCaptcha] = useState(null); // Estado para guardar la imagen del captcha
-  const [captchaText, setCaptchaText] = useState(''); // Estado para guardar el texto ingresado por el usuario
+  const [captcha, setCaptcha] = useState(null);
+  const [captchaText, setCaptchaText] = useState('');
   const navigate = useNavigate();
 
-  // Función para obtener la imagen del captcha
   useEffect(() => {
     const fetchCaptcha = async () => {
       try {
-        const response = await axios.get('http://52.55.206.54:5000/generate-captcha', { responseType: 'blob' });
-        
-        // Crear una URL del objeto blob
+        const response = await axios.get(
+          'http://52.55.206.54:5000/generate-captcha',
+          { responseType: 'blob' }
+        );
         const imageUrl = URL.createObjectURL(response.data);
         setCaptcha(imageUrl);
       } catch (err) {
@@ -24,7 +24,7 @@ function Login() {
       }
     };
 
-    fetchCaptcha(); // Llamar a la función al montar el componente
+    fetchCaptcha();
   }, []);
 
   const handleLogin = async () => {
@@ -32,7 +32,7 @@ function Login() {
       const res = await axios.post('http://52.55.206.54:8001/login', {
         email,
         password,
-        captcha: captchaText // Incluir el captcha ingresado por el usuario
+        captcha: captchaText
       });
 
       localStorage.setItem('token', res.data.token);
@@ -43,11 +43,15 @@ function Login() {
     }
   };
 
- return (
+  return (
     <div className="login-container">
-      {/* Logo fuera del contenedor del formulario */}
+
+      <h1 className="main-title">
+        Sistema de Gestión de Tutorías Académicas
+      </h1>
+
       <div className="login-logo">
-        <img src="logouce.png" alt="Logo Barbería" className="logo-image" />
+        <img src="logouce.png" alt="Logo" className="logo-image" />
       </div>
 
       <div className="login-box">
@@ -56,32 +60,31 @@ function Login() {
         <input
           type="text"
           placeholder="Usuario"
-          onChange={(e) => setEmail(e.target.value)}
           className="login-input"
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Contraseña"
-          onChange={(e) => setPassword(e.target.value)}
           className="login-input"
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* Mostrar el captcha */}
         {captcha && (
-          <div>
-            <img src={captcha} alt="captcha" />
+          <>
+            <img src={captcha} alt="Captcha" />
             <input
               type="text"
-              placeholder="Ingresa el captcha"
-              onChange={(e) => setCaptchaText(e.target.value)}
+              placeholder="Ingrese el captcha"
               className="login-input"
+              onChange={(e) => setCaptchaText(e.target.value)}
             />
-          </div>
+          </>
         )}
 
         <button onClick={handleLogin} className="login-button">
-          Login
+          Iniciar sesión
         </button>
 
         <p className="login-footer">
@@ -91,7 +94,7 @@ function Login() {
           </Link>
           <br />
           <Link to="/root-login" className="login-link">
-            Eres usuario Root, da click aquí
+            Usuario Root
           </Link>
         </p>
       </div>

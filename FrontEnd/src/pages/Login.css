@@ -1,89 +1,101 @@
-/* Login.css */
-
-/* Fondo de la página */
+/* Reset general */
 body {
   margin: 0;
   padding: 0;
-  background-image: url('barbero.jpg');  /* Ruta de la imagen de fondo */
-  background-size: cover;
-  background-position: center;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #ffffff 80%,
+    #0b4da2 80%,
+    #0b4da2 100%
+  );
 }
 
 /* Contenedor principal */
 .login-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex-direction: column; /* Asegura que el logo y el formulario estén centrados verticalmente */
+  justify-content: center;
 }
 
-/* Logo fuera del contenedor del formulario */
-.login-logo {
+/* Título principal */
+.main-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-/* Tamaño del logo */
+/* Logo */
+.login-logo {
+  margin-bottom: 20px;
+}
+
 .logo-image {
-  width: 100px;  /* Ajusta el tamaño del logo */
+  width: 90px;
   height: auto;
 }
 
 /* Caja de login */
 .login-box {
-  background-color: rgba(255, 255, 255, 0.8);  /* Fondo blanco translúcido */
-  padding: 40px;
-  border-radius: 10px;
-  width: 350px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 35px 40px;
+  border-radius: 12px;
+  width: 360px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* Título del login */
+/* Título del formulario */
 .login-title {
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
   text-align: center;
-  color: #333;
-  font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* Estilo de los inputs */
+/* Inputs */
 .login-input {
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 14px;
 }
 
-/* Botón de login */
+/* Botón */
 .login-button {
   width: 100%;
   padding: 12px;
-  background-color: #d9534f; /* Rojo barbería */
+  background-color: #0b4da2;
   border: none;
-  border-radius: 5px;
-  color: white;
+  border-radius: 6px;
+  color: #fff;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .login-button:hover {
-  background-color: #c9302c; /* Rojo más oscuro */
+  background-color: #083b7a;
 }
 
-/* Estilo de los links */
+/* Footer */
 .login-footer {
-  text-align: center;
   margin-top: 20px;
+  text-align: center;
   font-size: 14px;
 }
 
 .login-link {
-  color: #d9534f; /* Rojo barbería */
+  color: #0b4da2;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -91,14 +103,9 @@ body {
   text-decoration: underline;
 }
 
-/* Estilo del captcha */
-.login-input {
-  margin-top: 10px;
-}
-
+/* Captcha */
 img {
   width: 100%;
-  height: auto;
-  border-radius: 5px;
   margin-top: 10px;
+  border-radius: 6px;
 }
