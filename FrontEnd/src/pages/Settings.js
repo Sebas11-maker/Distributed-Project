@@ -26,7 +26,7 @@ function Settings() {
   // Función para cambiar el email
   const handleEmailChange = async () => {
     try {
-      const res = await fetch('http://98.85.244.110:4568/change-email', {
+      const res = await fetch('http://3.227.167.247:8003/update-username', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldEmail: email, newEmail })
@@ -46,7 +46,7 @@ function Settings() {
 
   const handlePasswordChange = async () => {
     try {
-      const res = await fetch('http://98.85.244.110:4567/change-password', {
+      const res = await fetch('http://3.227.167.247:8005/change-password', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, oldPassword, newPassword })
@@ -79,7 +79,7 @@ function Settings() {
     const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.');
     if (confirmDelete) {
       try {
-        const res = await fetch(`http://98.85.244.110:4569/delete_user?email=${email}`, {  // Se agrega el parámetro 'email' a la URL
+        const res = await fetch(`http://3.227.167.247:8004/delete_user?email=${email}`, {  // Se agrega el parámetro 'email' a la URL
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
