@@ -47,7 +47,7 @@ function Login() {
     <div className="login-container">
       {/* Logo fuera del contenedor del formulario */}
       <div className="login-logo">
-        <img src="logo.gif" alt="Logo Barbería" className="logo-image" />
+        <img src="logouce.png" alt="Logo Barbería" className="logo-image" />
       </div>
 
       <div className="login-box">
