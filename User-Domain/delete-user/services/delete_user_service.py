@@ -2,7 +2,8 @@ from flask import jsonify
 from models.user_model import UserModel
 
 class DeleteUserService:
+
     @staticmethod
-    def delete(user_id):
-        UserModel.delete_user(user_id)
+    def delete(email):
+        UserModel.delete_by_email(email)
         return jsonify({'message': 'Usuario eliminado'}), 200
