@@ -70,7 +70,7 @@ useEffect(() => {
     if (!file) return;
 
     const fileName = `profile_pics/${Date.now()}-${file.name}`;
-    const s3URL = `https://sebasbucket2452.s3.amazonaws.com/${fileName}`;
+    const s3URL = `https://sebasbucket2452.s3.us-east-1.amazonaws.com/perfil/${fileName}`;
 
     try {
       await fetch(s3URL, {
