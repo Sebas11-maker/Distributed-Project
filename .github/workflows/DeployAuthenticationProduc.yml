@@ -1,0 +1,58 @@
+name: Deploy Authentication Services to EC2
+
+on:
+  pull_request:
+    branches:
+      - main   
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Set up SSH key for EC2
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEYP }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build Docker images for login and register services
+      run: |
+        docker build -t sebitas11/login-service ./Authentication-Domain/Login
+        docker build -t sebitas11/register-service ./Authentication-Domain/Register
+        docker build -t sebitas11/captcha ./Authentication-Domain/captcha-microservice
+
+    - name: Push images to Docker Hub
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push sebitas11/login-service
+        docker push sebitas11/register-service
+        docker push sebitas11/captcha
+
+    - name: Deploy services to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 44.199.55.78
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEYP }}
+        script: |
+          # De
+          docker stop login-service || true
+          docker rm login-service || true
+          docker stop register-service || true
+          docker rm register-service || true
+          docker stop captcha || true
+          docker rm captcha || true
+
+          # D
+          docker pull sebitas11/login-service
+          docker pull sebitas11/register-service
+          docker pull sebitas11/captcha
+
+          # Eje
+          docker run -d --name login-service -p 8001:8001 --restart unless-stopped sebitas11/login-service
+          docker run -d --name register-service -p 8002:8002 --restart unless-stopped sebitas11/register-service
+          docker run -d --name captcha -p 5000:5000 --restart unless-stopped sebitas11/captcha
