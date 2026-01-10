@@ -1,5 +1,5 @@
-Barber Shop Appointment System Frontend 🚀
-Welcome to the Barber Shop Appointment System Frontend repository! This project serves as the user interface for a barber shop's scheduling and booking system. With this system, clients can easily schedule appointments, view available slots, and manage their bookings in a seamless manner.
+Academic Tutoring Management System Frontend 🚀
+Welcome to the Academic Tutoring Management System Frontend repository! This project serves as the user interface for the tutoring scheduling and booking system. With this system, clients can easily schedule appointments, view available slots, and manage their bookings seamlessly.
 
 Description 📅
 This frontend is built using React and is designed to interact with the backend system to provide a fully functional scheduling tool for the barber shop. It features:
