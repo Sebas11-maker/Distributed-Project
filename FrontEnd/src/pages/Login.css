@@ -1,0 +1,113 @@
+/* Reset general */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #ffffff 80%,
+    #0b4da2 80%,
+    #0b4da2 100%
+  );
+}
+
+
+/* Contenedor principal */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Título principal */
+.main-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Logo */
+.login-logo {
+  margin-bottom: 20px;
+}
+
+.logo-image {
+  width: 90px;
+  height: auto;
+}
+
+/* Caja de login */
+.login-box {
+  background-color: #ffffff;
+  padding: 35px 40px;
+  border-radius: 12px;
+  width: 360px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Título del formulario */
+.login-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.login-input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Botón */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #0b4da2;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-button:hover {
+  background-color: #083b7a;
+}
+
+/* Footer */
+.login-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-link {
+  color: #0b4da2;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Captcha */
+img {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
+}
