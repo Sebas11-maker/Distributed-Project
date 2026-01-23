@@ -3,10 +3,10 @@ import pyodbc
 def get_connection():
     conn = pyodbc.connect(
         'DRIVER={ODBC Driver 18 for SQL Server};'
-        'SERVER=database-1.ct8ujriqkfgd.us-east-1.rds.amazonaws.com;'
+        'SERVER=98.89.162.195,1433;'
         'DATABASE=auth_db;'
-        'UID=admin;'
-        'PWD=Distribuida123;'
+        'UID=sa;'
+        'PWD=Password123!;'
         'Encrypt=yes;'
         'TrustServerCertificate=yes;'
     )
