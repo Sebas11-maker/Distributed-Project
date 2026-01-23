@@ -7,7 +7,7 @@ def get_connection():
         'DATABASE=auth_db;'
         'UID=sa;'
         'PWD=Password123!;'
-        'Encrypt=yes;'
+        'Encrypt=no;'
         'TrustServerCertificate=yes;'
     )
     return conn, conn.cursor()
