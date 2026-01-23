@@ -14,7 +14,7 @@ function ViewAppointments() {
       }
 
       try {
-        const response = await fetch('http://3.218.197.27/api/vercita', {
+        const response = await fetch('http://98.89.51.218:8002/view-appointments', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,  // Enviar el token JWT en los encabezados
