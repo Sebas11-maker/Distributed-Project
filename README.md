@@ -7,7 +7,7 @@ This system focuses on the management of academic tutoring, allowing institution
 
 The repository contains both backend domains and the frontend application, all coordinated to work together as a unified system.
 
-Main Components 🧩
+Main Components 🧩.
 Authentication Domain:
 Handles user authentication and authorization, including login, registration, and secure access using modern security practices.
 
