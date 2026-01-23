@@ -1,0 +1,129 @@
+name: Deploy All Services to EC2
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # ===============================
+    # SETUP
+    # ===============================
+    - name: Set up SSH key for EC2
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # ===============================
+    # BUILD IMAGES
+    # ===============================
+    - name: Build Docker images
+      run: |
+        # Frontend
+        docker build -t sebitas11/my-react-app ./FrontEnd
+
+        # Authentication Domain
+        docker build -t sebitas11/login-service ./Authentication-Domain/Login
+        docker build -t sebitas11/register-service ./Authentication-Domain/Register
+        docker build -t sebitas11/captcha ./Authentication-Domain/captcha-microservice
+
+        # User Domain
+        docker build -t sebitas11/change-password ./User-Domain/change-password
+        docker build -t sebitas11/update-username ./User-Domain/update-username
+        docker build -t sebitas11/delete-account ./User-Domain/delete-user
+        docker build -t sebitas11/time ./User-Domain/date-time-service
+
+    # ===============================
+    # PUSH IMAGES
+    # ===============================
+    - name: Push images to Docker Hub
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+        docker push sebitas11/my-react-app
+
+        docker push sebitas11/login-service
+        docker push sebitas11/register-service
+        docker push sebitas11/captcha
+
+        docker push sebitas11/change-password
+        docker push sebitas11/update-username
+        docker push sebitas11/delete-account
+        docker push sebitas11/time
+
+    # ===============================
+    # DEPLOY FRONTEND (EC2 1)
+    # ===============================
+    - name: Deploy Frontend to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 34.195.185.67
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker stop my-react-app || true
+          docker rm my-react-app || true
+
+          docker pull sebitas11/my-react-app
+          docker run -d --name my-react-app -p 80:80 --restart unless-stopped sebitas11/my-react-app
+
+    # ===============================
+    # DEPLOY AUTH SERVICES (EC2 2)
+    # ===============================
+    - name: Deploy Authentication Services to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 52.55.206.54
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker stop login-service || true
+          docker rm login-service || true
+          docker stop register-service || true
+          docker rm register-service || true
+          docker stop captcha || true
+          docker rm captcha || true
+
+          docker pull sebitas11/login-service
+          docker pull sebitas11/register-service
+          docker pull sebitas11/captcha
+
+          docker run -d --name login-service -p 8001:8001 --restart unless-stopped sebitas11/login-service
+          docker run -d --name register-service -p 8002:8002 --restart unless-stopped sebitas11/register-service
+          docker run -d --name captcha -p 5000:5000 --restart unless-stopped sebitas11/captcha
+
+    # ===============================
+    # DEPLOY USER SERVICES (EC2 3)
+    # ===============================
+    - name: Deploy User Services to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: 3.227.167.247
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker stop change-password || true
+          docker rm change-password || true
+          docker stop update-username || true
+          docker rm update-username || true
+          docker stop delete-account || true
+          docker rm delete-account || true
+          docker stop time || true
+          docker rm time || true
+
+          docker pull sebitas11/change-password
+          docker pull sebitas11/update-username
+          docker pull sebitas11/delete-account
+          docker pull sebitas11/time
+
+          docker run -d --name change-password -p 8005:8005 --restart unless-stopped sebitas11/change-password
+          docker run -d --name update-username -p 8003:8003 --restart unless-stopped sebitas11/update-username
+          docker run -d --name delete-account -p 8004:8004 --restart unless-stopped sebitas11/delete-account
+          docker run -d --name time -p 8000:8000 --restart unless-stopped sebitas11/time
