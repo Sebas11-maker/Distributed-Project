@@ -1,11 +1,11 @@
 
-# Dating Service - Barber Appointment Microservice 💈
+# Dating Service - Microservice 💈
 
-Welcome to the **Dating Service** repository! This is a microservice that provides functionality for generating barber appointments. The system allows clients to schedule their appointments with the barber, providing an easy interface for managing bookings.
+Welcome to the **Dating Service** repository! This is a microservice that provides functionality for appointments. The system allows clients to schedule their appointments with the barber, providing an easy interface for managing bookings.
 
 ## Description 🔐
 
-The **Dating Service** is built to handle the creation and management of appointments for a barber shop. Clients can reserve time slots, and the system ensures that data is stored securely in a relational database. This microservice is part of the **Reservation Service** system and interacts with other services for comprehensive scheduling functionality.
+The **Dating Service** is built to handle the creation and management of appointment. Clients can reserve time slots, and the system ensures that data is stored securely in a relational database. This microservice is part of the **Reservation Service** system and interacts with other services for comprehensive scheduling functionality.
 
 ### Key Features ⚙️
 - **Appointment Generation:** Users can generate appointments for a barber.
@@ -42,16 +42,16 @@ The **Dating Service** is built to handle the creation and management of appoint
 
 ## Docker 🐳
 
-This service is containerized using Docker for easy deployment. The Docker image is hosted on Docker Hub with the name `galo12/dating`. To deploy the service, use the following commands:
+This service is containerized using Docker for easy deployment. The Docker image is hosted on Docker Hub with the name `sebitas11/dating`. To deploy the service, use the following commands:
 
 1. **Build the Docker image:**
    ```bash
-   docker build -t galo12/dating .
+   docker build -t sebitas11/dating .
    ```
 
 2. **Run the Docker container:**
    ```bash
-   docker run -p 5000:5000 galo12/dating
+   docker run -p 5000:5000 sebitas11/dating
    ```
 
 ### Additional Information 📌

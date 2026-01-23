@@ -4,7 +4,7 @@
 This microservice is part of the **Logs Service** domain and is responsible for providing the current server date and time. It allows clients to retrieve the exact time from the server whenever needed.
 
 ## Repository Link 📁
-- [GitHub Repository](https://github.com/GaloViturco/UserService)
+- [GitHub Repository](https://github.com/sebitas11/UserService)
 
 ## Docker Image 🐳
 - **Docker Image:** `galo12/time`
@@ -49,7 +49,7 @@ date-time-service/
 ## How to Deploy ⚙️
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/GaloViturco/UserService
+   git clone https://github.com/sebitas11/UserService
    ```
 
 2. **Install Dependencies:**

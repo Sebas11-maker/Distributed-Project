@@ -1,7 +1,7 @@
 
-# Get Dating Service - Barber Appointment Retrieval Microservice 💈
+# Get Dating Service - Microservice 💈
 
-Welcome to the **Get Dating Service** repository! This microservice is designed to retrieve barber appointments and display them in a table format. It allows users to view scheduled appointments, providing an organized and easy-to-read interface for managing their bookings.
+Welcome to the **Get Dating Service** repository! This microservice is designed to retrieve  display them in a table format. It allows users to view scheduled appointments, providing an organized and easy-to-read interface for managing their bookings.
 
 ## Description 🔐
 
@@ -45,16 +45,16 @@ The **Get Dating Service** is built to handle the retrieval of scheduled appoint
 
 ## Docker 🐳
 
-This service is containerized using Docker for easy deployment. The Docker image is hosted on Docker Hub with the name `galo12/get-dating`. To deploy the service, use the following commands:
+This service is containerized using Docker for easy deployment. The Docker image is hosted on Docker Hub with the name `sebitas11/get-dating`. To deploy the service, use the following commands:
 
 1. **Build the Docker image:**
    ```bash
-   docker build -t galo12/get-dating . 
+   docker build -t sebitas11/get-dating . 
    ```
 
 2. **Run the Docker container:**
    ```bash
-   docker run -p 5000:5000 galo12/get-dating
+   docker run -p 5000:5000 sebitas11/get-dating
    ```
 
 ### Additional Information 📌
