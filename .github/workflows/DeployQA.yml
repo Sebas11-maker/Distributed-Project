@@ -25,7 +25,7 @@ jobs:
     - name: Push frontend image
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push sebitas11/my-react-app
+        docker push sebitas11/my-react-app:latest
 
     - name: Deploy Frontend to EC2
       uses: appleboy/ssh-action@v1.0.0
@@ -62,9 +62,9 @@ jobs:
     - name: Push Auth images
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push sebitas11/login-service
-        docker push sebitas11/register-service
-        docker push sebitas11/captcha
+        docker push sebitas11/login-service:latest
+        docker push sebitas11/register-service:latest
+        docker push sebitas11/captcha:latest
 
     - name: Deploy Auth services to EC2
       uses: appleboy/ssh-action@v1.0.0
@@ -112,9 +112,9 @@ jobs:
     - name: Push User images
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push sebitas11/change-password
-        docker push sebitas11/update-username
-        docker push sebitas11/delete-account
+        docker push sebitas11/change-password:latest
+        docker push sebitas11/update-username:latest
+        docker push sebitas11/delete-account:latest
         docker push sebitas11/time
 
     - name: Deploy User services to EC2
