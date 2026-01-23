@@ -30,15 +30,15 @@ jobs:
         docker build -t sebitas11/my-react-app ./FrontEnd
 
         # Authentication Domain
-        docker build -t sebitas11/login-service ./Authentication-Domain/Login
-        docker build -t sebitas11/register-service ./Authentication-Domain/Register
-        docker build -t sebitas11/captcha ./Authentication-Domain/captcha-microservice
+        docker build -t sebitas11/login-service ./BackEnd/Authentication-Domain/Login
+        docker build -t sebitas11/register-service ./BackEnd/Authentication-Domain/Register
+        docker build -t sebitas11/captcha ./BackEnd/Authentication-Domain/captcha-microservice
 
         # User Domain
-        docker build -t sebitas11/change-password ./User-Domain/change-password
-        docker build -t sebitas11/update-username ./User-Domain/update-username
-        docker build -t sebitas11/delete-account ./User-Domain/delete-user
-        docker build -t sebitas11/time ./User-Domain/date-time-service
+        docker build -t sebitas11/change-password ./BackEnd/User-Domain/change-password
+        docker build -t sebitas11/update-username ./BackEnd/User-Domain/update-username
+        docker build -t sebitas11/delete-account ./BackEnd/User-Domain/delete-user
+        docker build -t sebitas11/time ./BackEnd/User-Domain/date-time-service
 
     # ===============================
     # PUSH IMAGES
