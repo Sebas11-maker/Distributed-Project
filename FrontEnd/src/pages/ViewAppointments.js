@@ -14,7 +14,7 @@ function ViewAppointments() {
       }
 
       try {
-        const response = await fetch('http://98.89.51.218:8002/view-appointments', {
+        const response = await fetch('http://98.89.253.33/api/view-appointments', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,  // Enviar el token JWT en los encabezados
