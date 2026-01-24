@@ -14,7 +14,7 @@ function Login() {
     const fetchCaptcha = async () => {
       try {
         const response = await axios.get(
-          'http://52.55.206.54/api/captcha',
+          'http://44.199.55.78/api/captcha',
           { responseType: 'blob' }
         );
         const imageUrl = URL.createObjectURL(response.data);
@@ -29,7 +29,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://52.55.206.54/api/login', {
+      const res = await axios.post('http://44.199.55.78/api/login', {
         email,
         password,
         captcha: captchaText
